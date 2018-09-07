@@ -1,0 +1,68 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: lightgrey;
+}
+html,* {
+    font-family:arial,sans-serif;
+}
+#app {
+    height:100vh;
+}
+
+.container {
+    height:100%;
+}
+
+.navigation {
+    width:20%;
+}
+.navigation li {
+    list-style: none;
+    margin:15px 0;
+}
+.navigation li a {
+    font-size:18px;
+    color: #252525;
+    text-decoration: none;
+}
+.navigation li a:hover {
+    color: #2875b3;
+}
+
+.wrapper_page {
+    height:100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.content {
+    width:80%;
+    border-left: 3px double grey;
+    display: flex;
+    /*justify-content: center;*/
+    /*align-items: center;*/
+}
+table {
+    width: 100%;
+}
+table tr {
+    text-align:center;
+}
+
+.add_company {
+    width: 50%;
+    margin: 0 auto;
+    border:2px solid grey;
+    margin-top:25px;
+    padding:25px;
+    border-radius: 8px;
+
+}
+
+.homepage {
+    height:100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
