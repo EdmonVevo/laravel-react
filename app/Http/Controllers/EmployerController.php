@@ -19,16 +19,6 @@ class EmployerController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -36,27 +26,32 @@ class EmployerController extends Controller
      */
     public function store(Request $request)
     {
-        $employer = new Employer();
-        $employer->firstname = $request['firstname'];
-        $employer->lastname = $request['lastname'];
-        $employer->company = $request['company'];
-        $employer->email = $request['email'];
-        $employer->phone = $request['phone'];
-        $employer->save();
-        $answer = 'Employer is saved';
-        return response()->json($answer);
+        $validatedData = $request->validate([
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'company' => 'required',
+            'email' => 'required',
+            'phone' => 'required',
+        ]);
 
-    }
+        if ($validatedData){
+            $employer = new Employer();
+            $employer->firstname = $request['firstname'];
+            $employer->lastname = $request['lastname'];
+            $employer->company = $request['company'];
+            $employer->email = $request['email'];
+            $employer->phone = $request['phone'];
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+
+            if ($employer->save()) {
+                $answer = 'Employer is saved';
+                return response()->json($answer);
+            }
+            else {
+                $answer = 'Employer is not saved';
+                return response()->json($answer);
+            }
+        }
     }
 
     /**
@@ -80,15 +75,30 @@ class EmployerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $employer = Employer::find($id);
-        $employer->firstname = $request['firstname'];
-        $employer->lastname = $request['lastname'];
-        $employer->company = $request['company'];
-        $employer->email = $request['email'];
-        $employer->phone = $request['phone'];
-        $employer->save();
-        $answer = 'Employer is saved';
-        return response()->json($answer);
+
+        $validatedData = $request->validate([
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'company' => 'required',
+            'email' => 'required',
+            'phone' => 'required',
+        ]);
+
+        if ($validatedData){
+            $employer = Employer::find($id);
+            $employer->firstname = $request['firstname'];
+            $employer->lastname = $request['lastname'];
+            $employer->company = $request['company'];
+            $employer->email = $request['email'];
+            $employer->phone = $request['phone'];
+            if ($employer->save()){
+                return response()->json(200);
+            }
+        }
+        else {
+            return response()->json(404);
+        }
+
     }
 
     /**
@@ -99,9 +109,8 @@ class EmployerController extends Controller
      */
     public function destroy($id)
     {
-        $employer=new Employer();
+        $employer=Employer::find($id);
         $employer->destroy($id);
-        $answer='Employer is removed';
-        return response()->json($answer);
+
     }
 }

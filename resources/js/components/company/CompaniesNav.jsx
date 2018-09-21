@@ -6,8 +6,35 @@ import CompanyEdit from './CompanyEdit'
 
 export default class CompaniesNav extends Component {
 
+    constructor(props){
+        super(props);
+    }
 
+    handleCompanyAdd(company) {
+        const localToken = localStorage.getItem('token');
+        axios.post('/api/companies/store', company, {
+            headers: {'Authorization': 'Bearer ' + localToken
+            },
+        })
+            .then(response => {
 
+            })
+            .catch((e) => {
+              console.log(e);
+        });
+    }
+    handleCompanyUpdate(id,company){
+        axios.put('/api/companies/update/' + id , company,{
+                    headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')},
+                })
+                    .then(response=>{
+                        return true;
+                    })
+                    .catch((e)=>{
+                        console.log(e)
+                    });
+
+    }
 
 
     render(){
@@ -30,9 +57,12 @@ export default class CompaniesNav extends Component {
                             </nav>
 
 
-                            <Route exact path="/companies" component={CompanyList}/>
-                            <Route exact path="/companies/add" component={CompanyAdd}/>
-                            <Route exact path="/companies/edit/:id" component={CompanyEdit}/>
+                            <Route exact strict path="/companies"
+                                   render = {()=><CompanyList token={this.props.token}/>} />
+                            <Route exact strict path="/companies/add"
+                                   render = {()=><CompanyAdd  token={this.props.token} handleCompanyAdd={this.handleCompanyAdd} /> } />
+                            <Route exact strict path="/companies/edit/:id"
+                                  render = {(props)=><CompanyEdit token={this.props.token} handleCompanyUpdate={this.handleCompanyUpdate} {...props}/>} />
                         </div>
                     </Router>
                 </div>

@@ -21,7 +21,9 @@ export default class EmployerEdit extends Component {
 
     componentWillMount() {
         axios
-            .get('/api/employees/edit/'+this.props.match.params.id)
+            .get('/api/employees/edit/'+this.props.match.params.id,{
+                headers: {'Authorization': 'Bearer ' + this.props.token},
+            })
             .then(response => {
                 this.setState({
                     firstname: response.data.firstname,
@@ -30,7 +32,6 @@ export default class EmployerEdit extends Component {
                     email: response.data.email,
                     phone: response.data.phone
                 });
-                console.log(response);
             })
             .catch(error => console.log(error))
     }
@@ -45,7 +46,7 @@ export default class EmployerEdit extends Component {
     handleOnSubmit(e) {
         e.preventDefault();
         let employer_information = this.state;
-        const { name, email, website } = this.state;
+        const { firstname, lastname, company,email,phone } = this.state;
         if (firstname == '' || lastname == '' || company == '' || email == '' || phone == ''){
             this.setState({
                 message:'You have fields',
@@ -53,15 +54,12 @@ export default class EmployerEdit extends Component {
             });
         }
         else {
-            axios.put('/api/employees/update/' + this.props.match.params.id , employer_information)
-                .then(response=>{
-                    this.setState({
-                        message:'Employer is updated',
-                        messageType:'alert alert-success'
-                    });
-
-                })
-                .catch(error=>console.log(error));
+            const id = this.props.match.params.id;
+            this.props.handleEmployerUpdate(id,employer_information);
+            this.setState({
+                message:'Employer is updated',
+                messageType:'alert alert-success'
+            });
         }
     };
 

@@ -3,8 +3,6 @@ import axios from 'axios';
 
 export default class EmployerAdd extends Component {
 
-
-
     constructor(){
         super();
         this.state = {
@@ -38,14 +36,18 @@ export default class EmployerAdd extends Component {
             });
         }
         else {
-            axios.post('/api/employees/store',employer_information)
-                .then(response=>{
-                    console.log(response.data); this.setState({
-                        message: response.data,
-                        messageType:'alert alert-success'
-                    });
-                })
-                .catch(e=>console.log(e));
+            const EmployerInfo = {
+                firstname:firstname,
+                lastname:lastname,
+                company:company,
+                email:email,
+                phone:phone
+            };
+            this.props.handleEmployerAdd(EmployerInfo);
+            this.setState({
+                message:'Employer is created',
+                messageType:'alert alert-success'
+            });
         }
     };
 

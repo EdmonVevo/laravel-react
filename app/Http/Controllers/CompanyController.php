@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Company;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CompanyController extends Controller
 {
@@ -20,42 +21,43 @@ class CompanyController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        $company = new Company();
-        $company->name = $request->get('name');
-        $company->email = $request->get('email');
-        $company->website = $request->get('website');
-        $company->save();
-        $answer = 'Comapany is saved';
-        return response()->json($answer);
+    public function store(Request $request) {
+
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'email' => 'required',
+            'website' => 'required',
+            'logo'=>'required'
+        ]);
+        if ($validatedData){
+            $file_data = $request->get('logo');  // your base64 encoded
+            $file_name = 'image_'.time().'.png'; //generating unique file name;
+            @list($type, $file_data) = explode(';', $file_data);
+            @list(, $file_data) = explode(',', $file_data);
+            if($file_data!=""){ // storing image in storage/app/public Folder
+                Storage::disk('public_uploads')->put($file_name,base64_decode($file_data));
+            }
+
+            $company = new Company();
+            $company->name = $request->get('name');
+            $company->email = $request->get('email');
+            $company->website = $request->get('website');
+            $company->logo = $file_name;
+           if ($company->save()){
+               return response()->json(200);
+           }
+        }
+        else {
+            return response()->json(404);
+        }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -67,9 +69,7 @@ class CompanyController extends Controller
     {
         $company = Company::find($id);
         return $company;
-
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -79,13 +79,34 @@ class CompanyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $company = Company::find($id);
-        $company->name = $request->get('name');
-        $company->email = $request->get('email');
-        $company->website = $request->get('website');
-        $company->save();
-        $answer = $request;
-        return response()->json($answer);
+
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'email' => 'required',
+            'website' => 'required',
+            'logo'=>'required'
+        ]);
+
+        if ($validatedData){
+            $file_data = $request->get('logo');  // your base64 encoded
+            $file_name = 'image_'.time().'.png'; //generating unique file name;
+            @list($type, $file_data) = explode(';', $file_data);
+            @list(, $file_data) = explode(',', $file_data);
+            if($file_data!=""){ // storing image in storage/app/public Folder
+                Storage::disk('public_uploads')->put($file_name,base64_decode($file_data));
+            }
+            $company = Company::find($id);
+            $company->name = $request->get('name');
+            $company->email = $request->get('email');
+            $company->website = $request->get('website');
+            $company->logo = $file_name;
+            if ($company->save()){
+                return response()->json(200);
+            }
+        }
+        else {
+            return response()->json(404);
+        }
     }
 
     /**
@@ -96,9 +117,11 @@ class CompanyController extends Controller
      */
     public function destroy($id)
     {
-        $company = new Company();
-        $company->destroy($id);
-        $answer = 'Company is deleted';
-        return  response()->json($answer);
+        $company =Company::find($id);
+        if($company->destroy($id)) {
+            $image = $company->logo;
+            $filename = public_path().'/images/'.$image;
+            \File::delete($filename);
+        }
     }
 }

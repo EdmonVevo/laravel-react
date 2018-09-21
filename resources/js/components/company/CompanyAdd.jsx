@@ -1,20 +1,21 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 
 export default class CompanyList extends Component {
 
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state = {
             name:'',
             email:'',
             website:'',
+            logo:'',
             message:'',
             messageType:''
         };
-
         this.handleOnChange = this.handleOnChange.bind(this);
         this.handleOnSubmit = this.handleOnSubmit.bind(this);
+        this.handleFileOnChange = this.handleFileOnChange.bind(this);
+        this.createImage = this.createImage.bind(this);
     };
 
     handleOnChange(e){
@@ -25,8 +26,7 @@ export default class CompanyList extends Component {
 
     handleOnSubmit(e) {
         e.preventDefault();
-        let company_information = this.state;
-        const { name, email, website } = this.state;
+        const { name, email, website , logo } = this.state;
         if (name == '' || email == '' || website == '' ){
             this.setState({
                 message:'Empty fields',
@@ -34,22 +34,41 @@ export default class CompanyList extends Component {
             });
         }
         else {
-            axios.post('/api/companies/store',company_information)
-                .then(response=>{
-                    console.log(response.data); this.setState({
-                        message:'Company is updated',
-                        messageType:'alert alert-success'
-                    });
-                })
-                .catch(e=>console.log(e));
+            const CompanyInfo = {
+                name:name,
+                email:email,
+                website:website,
+                logo: logo
+            };
+            this.props.handleCompanyAdd(CompanyInfo);
+            this.setState({
+                message:'Company is created',
+                messageType:'alert alert-success'
+            });
         }
     };
 
+    handleFileOnChange(e) {
+        let files = e.target.files || e.dataTransfer.files;
+        if (!files.length)
+            return;
+        this.createImage(files[0]);
+    }
+
+    createImage(file) {
+        let reader = new FileReader();
+        reader.onload = (e) => {
+            this.setState({
+                logo: e.target.result
+            })
+        };
+        reader.readAsDataURL(file);
+    }
 
     render(){
         return(
             <div>
-                <form className="add_company" onSubmit={this.handleOnSubmit}>
+                <form name='company_form' className="add_company" onSubmit={this.handleOnSubmit} encType="multipart/form-data" >
                     <div className={this.state.messageType} role="alert">
                         <h3>{this.state.message}</h3>
                     </div>
@@ -65,6 +84,10 @@ export default class CompanyList extends Component {
                     <div className="form-group">
                         <label htmlFor="website">Website</label>
                         <input type="text" name="website" className="form-control" id="website" placeholder="Enter website"  onChange={this.handleOnChange}  value={this.state.website} />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="logo">Logo</label>
+                        <input  type="file" name="logo" id="logo" className="form-control" onChange={this.handleFileOnChange}/>
                     </div>
 
                     <button type="submit" name="submit" className="btn btn-primary">Submit</button>

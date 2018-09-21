@@ -15,5 +15,12 @@ class DatabaseSeeder extends Seeder
     {
         factory(Company::class, 30)->create();
         factory(Employer::class, 30)->create();
+
+            DB::table('users')->insert([
+                'name' => 'Edmon',
+                'email' => 'admin@admin.com',
+                'password' => bcrypt('password'),
+            ]);
+
     }
 }

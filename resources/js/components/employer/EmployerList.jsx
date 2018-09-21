@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {HashRouter as Router, Link, Route} from 'react-router-dom';
+import {HashRouter as Router, Link} from 'react-router-dom';
 import axios from 'axios';
 import Pagination from "react-js-pagination";
 
@@ -20,7 +20,9 @@ export default class EmployerList extends Component {
 
     componentDidMount(){
         axios
-            .get('api/employees')
+            .get('api/employees',{
+                headers: {Authorization: 'Bearer ' + this.props.token}
+            })
             .then(response=> {
                this.setState({
                    employees_data:response.data.data,
@@ -34,7 +36,9 @@ export default class EmployerList extends Component {
 
     handleDelete(id){
         axios
-            .delete('/api/employees/delete/'+ id)
+            .delete('/api/employees/delete/'+ id , {
+                headers: {Authorization: 'Bearer ' + this.props.token},
+            })
             .then(response=>{
 
                 let newEmployerData = this.state.employees_data.filter((item)=> {
@@ -49,7 +53,9 @@ export default class EmployerList extends Component {
 
     handlePageChange(pageNumber){
         axios
-            .get('api/employees?page='+ pageNumber)
+            .get('api/employees?page='+ pageNumber,{
+                headers: {Authorization: 'Bearer ' + this.props.token},
+            })
             .then(response=> {
                 this.setState({
                     employees_data:response.data.data,

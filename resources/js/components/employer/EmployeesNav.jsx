@@ -5,6 +5,34 @@ import EmployerAdd from './EmployerAdd';
 import EmployerEdit from './EmployerEdit';
 
 export default class EmployeesNav extends Component {
+
+    constructor(props){
+        super(props);
+    }
+
+    handleEmployerAdd(employer) {
+
+        const localToken = localStorage.getItem('token');
+        axios.post('/api/employees/store', employer, {
+            headers: {'Authorization': 'Bearer ' + localToken},
+        })
+            .then(response => {
+                    return true;
+                }
+            ).catch((e) => {
+            console.log(e);
+        });
+    }
+    handleEmployerUpdate(id,employer){
+        axios.put('/api/employees/update/' + id , employer,{
+            headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')},
+        })
+            .then(response=>{
+                return true;
+
+            })
+            .catch(e=>console.log(e));
+    }
     render(){
         return (
             <div>
@@ -25,9 +53,12 @@ export default class EmployeesNav extends Component {
                         </nav>
 
 
-                           <Route exact path="/employees" component={EmployerList}/>
-                           <Route exact path="/employees/add" component={EmployerAdd}/>
-                           <Route exact path="/employees/edit/:id" component={EmployerEdit}/>
+                           <Route exact path="/employees"
+                                  render = {()=><EmployerList token={this.props.token}/>} />
+                           <Route exact path="/employees/add"
+                                  render = {()=><EmployerAdd token={this.props.token} handleEmployerAdd={this.handleEmployerAdd} />} />
+                           <Route exact path="/employees/edit/:id"
+                                  render = {(props)=><EmployerEdit token={this.props.token} handleEmployerUpdate={this.handleEmployerUpdate}  {...props}/>} />
                     </div>
                 </Router>
             </div>

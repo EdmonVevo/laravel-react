@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import {HashRouter as Router, Link, Route} from 'react-router-dom';
+import {HashRouter as Router, Link } from 'react-router-dom';
 import axios from 'axios';
 import Pagination from "react-js-pagination";
 
 export default class CompanyList extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             companies_data: [],
             activePage:1,
@@ -13,12 +13,15 @@ export default class CompanyList extends Component {
             totalItemsCount:1,
             pageRangeDisplayed:3
         }
-        this.handlePageChange = this.handlePageChange.bind(this)
+        this.handlePageChange = this.handlePageChange.bind(this);
+
     };
 
     componentDidMount() {
         axios
-            .get('/api/companies')
+            .get('/api/companies',{
+                headers: {Authorization: 'Bearer ' + this.props.token},
+            })
             .then(response => {
                 this.setState({
                     companies_data: response.data.data,
@@ -26,13 +29,16 @@ export default class CompanyList extends Component {
                     totalItemsCount:response.data.total,
                     activePage:response.data.current_page
                 });
+
             })
             .catch(error => console.log(error))
     }
 
     handleDelete(id) {
         axios
-            .delete('/api/companies/delete/' + id,)
+            .delete('/api/companies/delete/' + id,{
+                headers: {Authorization: 'Bearer ' + this.props.token},
+            })
             .then(response => {
 
                 let newCompaniesData = this.state.companies_data.filter((item) => {
@@ -49,7 +55,9 @@ export default class CompanyList extends Component {
 
     handlePageChange(pageNumber) {
         axios
-            .get('/api/companies?page='+pageNumber)
+            .get('/api/companies?page='+pageNumber,{
+                headers: {Authorization: 'Bearer ' + this.props.token},
+            })
             .then(response => {
                 this.setState({
                     companies_data: response.data.data,
@@ -76,6 +84,10 @@ export default class CompanyList extends Component {
                     <td>{company.name}</td>
                     <td>{company.email}</td>
                     <td>{company.website}</td>
+                    <td><img className="company_logo" src=
+                             {company.logo !== null ? `images/${company.logo}` : 'https://images.fineartamerica.com/images-medium-large-5/bean-digital-portrait-paul-tagliamonte.jpg'}
+
+                             alt=""/></td>
                     <td>{company.created_at}</td>
                     <td>
                         <Link className="btn btn-warning" to={`/companies/edit/${company.id}`}>Edit</Link>
@@ -100,6 +112,7 @@ export default class CompanyList extends Component {
                         <th scope="col">Name</th>
                         <th scope="col">Email</th>
                         <th scope="col">Website</th>
+                        <th scope="col">Logo</th>
                         <th scope="col">Created at</th>
                         <th scope="col">Edit</th>
                         <th scope="col">Remove</th>
