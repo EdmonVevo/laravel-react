@@ -10,7 +10,7 @@
         <p>
            open terminal and write</br>
            1: composer update<br/>
-           2: npm update<br/>
+           2: npm update<br/> 
            3: php artisan key:generate</br>
            4: php artisan jwt:secret</br>
            5: php artisan migrate<br/>
