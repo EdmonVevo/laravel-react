@@ -9,8 +9,8 @@
     <li>
         <p>
            open terminal and write</br>
-           1: composer update<br/>
-           2: npm update<br/>
+           1: composer install<br/>
+           2: npm install<br/>
            3: php artisan migrate<br/>
            4: php artisan db:seed</br>
            4: php artisan serve<br/>
