@@ -36,7 +36,7 @@ export default class EmployerList extends Component {
 
     handleDelete(id){
         axios
-            .delete('/api/employees/delete/'+ id , {
+            .delete('/api/employees/'+ id , {
                 headers: {Authorization: 'Bearer ' + this.props.token},
             })
             .then(response=>{
@@ -88,7 +88,7 @@ export default class EmployerList extends Component {
                     <td>{employer.phone}</td>
                     <td>{employer.created_at}</td>
                     <td>
-                        <Link className="btn btn-warning" to={`/employees/edit/${employer.id}`}>Edit</Link>
+                        <Link className="btn btn-warning" to={`/employees/${employer.id}`}>Edit</Link>
                     </td>
                     <td>
                         <button className="btn btn-danger" onClick={() => this.handleDelete(employer.id)}>

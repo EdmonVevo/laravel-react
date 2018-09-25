@@ -36,7 +36,7 @@ export default class CompanyList extends Component {
 
     handleDelete(id) {
         axios
-            .delete('/api/companies/delete/' + id,{
+            .delete('/api/companies/' + id,{
                 headers: {Authorization: 'Bearer ' + this.props.token},
             })
             .then(response => {
@@ -90,7 +90,7 @@ export default class CompanyList extends Component {
                              alt=""/></td>
                     <td>{company.created_at}</td>
                     <td>
-                        <Link className="btn btn-warning" to={`/companies/edit/${company.id}`}>Edit</Link>
+                        <Link className="btn btn-warning" to={`/companies/${company.id}`}>Edit</Link>
                     </td>
                     <td>
                         <button className="btn btn-danger" onClick={() => this.handleDelete(company.id)}>

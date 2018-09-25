@@ -61882,7 +61882,7 @@ var CompaniesNav = function (_Component) {
         key: 'handleCompanyAdd',
         value: function handleCompanyAdd(company) {
             var localToken = localStorage.getItem('token');
-            axios.post('/api/companies/store', company, {
+            axios.post('/api/companies', company, {
                 headers: { 'Authorization': 'Bearer ' + localToken
                 }
             }).then(function (response) {}).catch(function (e) {
@@ -61892,7 +61892,7 @@ var CompaniesNav = function (_Component) {
     }, {
         key: 'handleCompanyUpdate',
         value: function handleCompanyUpdate(id, company) {
-            axios.put('/api/companies/update/' + id, company, {
+            axios.put('/api/companies/' + id, company, {
                 headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
             }).then(function (response) {
                 return true;
@@ -61952,7 +61952,7 @@ var CompaniesNav = function (_Component) {
                             render: function render() {
                                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__CompanyAdd__["a" /* default */], { token: _this2.props.token, handleCompanyAdd: _this2.handleCompanyAdd });
                             } }),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["e" /* Route */], { exact: true, strict: true, path: '/companies/edit/:id',
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["e" /* Route */], { exact: true, strict: true, path: '/companies/:id',
                             render: function render(props) {
                                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__CompanyEdit__["a" /* default */], _extends({ token: _this2.props.token, handleCompanyUpdate: _this2.handleCompanyUpdate }, props));
                             } })
@@ -62035,7 +62035,7 @@ var CompanyList = function (_Component) {
         value: function handleDelete(id) {
             var _this3 = this;
 
-            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.delete('/api/companies/delete/' + id, {
+            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.delete('/api/companies/' + id, {
                 headers: { Authorization: 'Bearer ' + this.props.token }
             }).then(function (response) {
 
@@ -62112,7 +62112,7 @@ var CompanyList = function (_Component) {
                         null,
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
-                            { className: 'btn btn-warning', to: '/companies/edit/' + company.id },
+                            { className: 'btn btn-warning', to: '/companies/' + company.id },
                             'Edit'
                         )
                     ),
@@ -62538,7 +62538,7 @@ var CompanyEdit = function (_Component) {
         value: function componentWillMount() {
             var _this2 = this;
 
-            __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get('/api/companies/edit/' + this.props.match.params.id, {
+            __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get('/api/companies/' + this.props.match.params.id, {
                 headers: { 'Authorization': 'Bearer ' + this.props.token }
             }).then(function (response) {
                 _this2.setState({
@@ -62721,7 +62721,7 @@ var EmployeesNav = function (_Component) {
         value: function handleEmployerAdd(employer) {
 
             var localToken = localStorage.getItem('token');
-            axios.post('/api/employees/store', employer, {
+            axios.post('/api/employees', employer, {
                 headers: { 'Authorization': 'Bearer ' + localToken }
             }).then(function (response) {
                 return true;
@@ -62732,7 +62732,7 @@ var EmployeesNav = function (_Component) {
     }, {
         key: 'handleEmployerUpdate',
         value: function handleEmployerUpdate(id, employer) {
-            axios.put('/api/employees/update/' + id, employer, {
+            axios.put('/api/employees/' + id, employer, {
                 headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
             }).then(function (response) {
                 return true;
@@ -62792,7 +62792,7 @@ var EmployeesNav = function (_Component) {
                             render: function render() {
                                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__EmployerAdd__["a" /* default */], { token: _this2.props.token, handleEmployerAdd: _this2.handleEmployerAdd });
                             } }),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["e" /* Route */], { exact: true, path: '/employees/edit/:id',
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["e" /* Route */], { exact: true, path: '/employees/:id',
                             render: function render(props) {
                                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__EmployerEdit__["a" /* default */], _extends({ token: _this2.props.token, handleEmployerUpdate: _this2.handleEmployerUpdate }, props));
                             } })
@@ -62875,7 +62875,7 @@ var EmployerList = function (_Component) {
         value: function handleDelete(id) {
             var _this3 = this;
 
-            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.delete('/api/employees/delete/' + id, {
+            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.delete('/api/employees/' + id, {
                 headers: { Authorization: 'Bearer ' + this.props.token }
             }).then(function (response) {
 
@@ -62956,7 +62956,7 @@ var EmployerList = function (_Component) {
                         null,
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
-                            { className: 'btn btn-warning', to: '/employees/edit/' + employer.id },
+                            { className: 'btn btn-warning', to: '/employees/' + employer.id },
                             'Edit'
                         )
                     ),
@@ -63284,7 +63284,7 @@ var EmployerEdit = function (_Component) {
         value: function componentWillMount() {
             var _this2 = this;
 
-            __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get('/api/employees/edit/' + this.props.match.params.id, {
+            __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get('/api/employees/' + this.props.match.params.id, {
                 headers: { 'Authorization': 'Bearer ' + this.props.token }
             }).then(function (response) {
                 _this2.setState({

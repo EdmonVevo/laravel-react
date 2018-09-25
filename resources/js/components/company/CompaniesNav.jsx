@@ -12,7 +12,7 @@ export default class CompaniesNav extends Component {
 
     handleCompanyAdd(company) {
         const localToken = localStorage.getItem('token');
-        axios.post('/api/companies/store', company, {
+        axios.post('/api/companies', company, {
             headers: {'Authorization': 'Bearer ' + localToken
             },
         })
@@ -24,7 +24,7 @@ export default class CompaniesNav extends Component {
         });
     }
     handleCompanyUpdate(id,company){
-        axios.put('/api/companies/update/' + id , company,{
+        axios.put('/api/companies/' + id , company,{
                     headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')},
                 })
                     .then(response=>{
@@ -61,7 +61,7 @@ export default class CompaniesNav extends Component {
                                    render = {()=><CompanyList token={this.props.token}/>} />
                             <Route exact strict path="/companies/add"
                                    render = {()=><CompanyAdd  token={this.props.token} handleCompanyAdd={this.handleCompanyAdd} /> } />
-                            <Route exact strict path="/companies/edit/:id"
+                            <Route exact strict path="/companies/:id"
                                   render = {(props)=><CompanyEdit token={this.props.token} handleCompanyUpdate={this.handleCompanyUpdate} {...props}/>} />
                         </div>
                     </Router>

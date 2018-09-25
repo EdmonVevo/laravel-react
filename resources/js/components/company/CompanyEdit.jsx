@@ -22,7 +22,7 @@ export default class CompanyEdit extends Component {
     //
     componentWillMount() {
         axios
-            .get('/api/companies/edit/'+ this.props.match.params.id , {
+            .get('/api/companies/'+ this.props.match.params.id , {
                 headers: {'Authorization': 'Bearer ' + this.props.token},
             })
             .then(response => {
