@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCompany;
 use Illuminate\Support\Facades\Storage;
 
-class CompanyController extends Controller
+class CompaniesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,10 +17,8 @@ class CompanyController extends Controller
      */
     public function index()
     {
-
         $company = Company::orderBy('id','desc')->paginate(10);
         return response()->json($company);
-
     }
 
     /**
@@ -32,14 +30,13 @@ class CompanyController extends Controller
      */
     public function store(StoreCompany $request)
     {
-
         $request->validated();
 
-        $file_data = $request->get('logo');  // your base64 encoded
-        $file_name = 'image_'.time().'.png'; //generating unique file name;
+        $file_data = $request->get('logo');
+        $file_name = 'image_'.time().'.png';
         @list($type, $file_data) = explode(';', $file_data);
         @list(, $file_data) = explode(',', $file_data);
-        if($file_data!=""){ // storing image in storage/app/public Folder
+        if($file_data!=""){
             Storage::disk('public_uploads')->put($file_name,base64_decode($file_data));
         }
 
@@ -63,10 +60,8 @@ class CompanyController extends Controller
      */
     public function edit($id)
     {
-
         $company = Company::find($id);
         return $company;
-
     }
     /**
      * Update the specified resource in storage.
@@ -77,7 +72,6 @@ class CompanyController extends Controller
      */
     public function update(StoreCompany $request, $id)
     {
-
         $request->validated();
 
         $file_data = $request->get('logo');
@@ -96,7 +90,6 @@ class CompanyController extends Controller
             return response()->json("Company is updated");
         }
         return response()->json("Something went wrong");
-
     }
 
     /**
@@ -107,13 +100,11 @@ class CompanyController extends Controller
      */
     public function destroy($id)
     {
-
         $company = Company::find($id);
         if($company->destroy($id)) {
             $image = $company->logo;
             $filename = public_path('images/').$image;
             File::delete($filename);
         }
-
     }
 }

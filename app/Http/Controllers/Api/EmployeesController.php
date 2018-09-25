@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 
-class EmployerController extends Controller
+class EmployeesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,10 +17,8 @@ class EmployerController extends Controller
      */
     public function index()
     {
-
         $employer = Employer::orderBy('id','desc')->paginate(8);
         return response()->json($employer);
-
     }
 
     /**
@@ -31,7 +29,6 @@ class EmployerController extends Controller
      */
     public function store(StoreEmployer $request)
     {
-
         $request->validated();
 
         $employer = new Employer();
@@ -42,15 +39,14 @@ class EmployerController extends Controller
         $employer->phone = $request['phone'];
 
 
-            if ($employer->save()) {
-                $answer = 'Employer is saved';
-                return response()->json($answer);
-            }
-            else {
-                $answer = 'Employer is not saved';
-                return response()->json($answer);
-            }
-
+        if ($employer->save()) {
+            $answer = 'Employer is saved';
+            return response()->json($answer);
+        }
+        else {
+            $answer = 'Employer is not saved';
+            return response()->json($answer);
+        }
     }
 
     /**
@@ -61,10 +57,8 @@ class EmployerController extends Controller
      */
     public function edit($id)
     {
-
         $employer = Employer::find($id);
         return $employer;
-
     }
 
     /**
@@ -76,7 +70,6 @@ class EmployerController extends Controller
      */
     public function update(StoreEmployer $request, $id)
     {
-
         $request->validated();
 
         $employer = Employer::find($id);
@@ -89,7 +82,6 @@ class EmployerController extends Controller
             return response()->json("Employer is updated");
         }
         return response()->json("Something went wrong");
-
     }
 
     /**
@@ -100,9 +92,7 @@ class EmployerController extends Controller
      */
     public function destroy($id)
     {
-
         $employer=Employer::find($id);
         $employer->destroy($id);
-
     }
 }
