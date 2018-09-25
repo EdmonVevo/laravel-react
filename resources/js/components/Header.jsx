@@ -47,7 +47,9 @@ export default class Header extends Component {
                                     </span>
                                     </a>
                                     <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <NavLink to="/" onClick={this.handleLogout}  className="dropdown-item" replace>
+                                        <NavLink to="/"
+                                                 onClick={this.handleLogout}
+                                                 className="dropdown-item" replace>
                                             Logout
                                         </NavLink>
                                     </div>

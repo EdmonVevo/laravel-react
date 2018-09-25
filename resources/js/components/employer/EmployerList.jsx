@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import {HashRouter as Router, Link} from 'react-router-dom';
-import axios from 'axios';
+import React, { Component } from "react";
+import {HashRouter as Router, Link} from "react-router-dom";
+import axios from "axios";
 import Pagination from "react-js-pagination";
 
 export default class EmployerList extends Component {
@@ -20,8 +20,10 @@ export default class EmployerList extends Component {
 
     componentDidMount(){
         axios
-            .get('api/employees',{
-                headers: {Authorization: 'Bearer ' + this.props.token}
+            .get("api/employees",{
+                headers: {
+                    Authorization: "Bearer " + this.props.token
+                }
             })
             .then(response=> {
                this.setState({
@@ -36,11 +38,12 @@ export default class EmployerList extends Component {
 
     handleDelete(id){
         axios
-            .delete('/api/employees/'+ id , {
-                headers: {Authorization: 'Bearer ' + this.props.token},
+            .delete("/api/employees/"+ id , {
+                headers: {
+                    Authorization: "Bearer " + this.props.token
+                },
             })
             .then(response=>{
-
                 let newEmployerData = this.state.employees_data.filter((item)=> {
                     return item.id != id;
                 });
@@ -53,8 +56,8 @@ export default class EmployerList extends Component {
 
     handlePageChange(pageNumber){
         axios
-            .get('api/employees?page='+ pageNumber,{
-                headers: {Authorization: 'Bearer ' + this.props.token},
+            .get("api/employees?page="+ pageNumber,{
+                headers: {Authorization: "Bearer " + this.props.token},
             })
             .then(response=> {
                 this.setState({
@@ -88,10 +91,13 @@ export default class EmployerList extends Component {
                     <td>{employer.phone}</td>
                     <td>{employer.created_at}</td>
                     <td>
-                        <Link className="btn btn-warning" to={`/employees/${employer.id}`}>Edit</Link>
+                        <Link
+                            className="btn btn-warning"
+                            to={`/employees/${employer.id}`}>Edit</Link>
                     </td>
                     <td>
-                        <button className="btn btn-danger" onClick={() => this.handleDelete(employer.id)}>
+                        <button className="btn btn-danger"
+                                onClick={() => this.handleDelete(employer.id)}>
                             Delete
                         </button>
                     </td>
@@ -107,7 +113,6 @@ export default class EmployerList extends Component {
                 <table className="table">
                     <thead>
                     <tr>
-
                         <th scope="col">Firstname</th>
                         <th scope="col">Lastname</th>
                         <th scope="col">Company</th>

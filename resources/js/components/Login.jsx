@@ -25,7 +25,7 @@ export default class Login extends Component {
     }
 
 
-    render() {
+    render(){
         if(this.props.loginStatus) {
             return (
                 <Redirect to='/companies'/>
@@ -38,19 +38,22 @@ export default class Login extends Component {
                         <div className="card">
                             <div className="card-header">
                                 <div className="card-body">
-                                    <form onSubmit={this.handleSubmit}>
+                                    <form
+                                        onSubmit={this.handleSubmit}>
                                         <div className="form-group row">
                                             <label htmlFor="email"
                                                    className="col-sm-4 col-form-label text-md-right">Email</label>
                                             <div className="col-md-6">
-                                                <input onChange={this.handleChange} id="email" type="email" className="form-control" name="email" value={this.state.email} required/>
+                                                <input
+                                                    onChange={this.handleChange} id="email" type="email" className="form-control" name="email" value={this.state.email} required/>
                                             </div>
                                         </div>
                                         <div className="form-group row">
                                             <label htmlFor="password"
                                                    className="col-sm-4 col-form-label text-md-right">Password</label>
                                             <div className="col-md-6">
-                                                <input onChange={this.handleChange} id="password" type="password" className="form-control" autoComplete="current-password"
+                                                <input
+                                                    onChange={this.handleChange} id="password" type="password" className="form-control" autoComplete="current-password"
                                                        name="password" value={this.state.password} required/>
                                             </div>
                                         </div>

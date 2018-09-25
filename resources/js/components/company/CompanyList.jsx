@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
-import {HashRouter as Router, Link } from 'react-router-dom';
-import axios from 'axios';
+import React, {Component} from "react";
+import {HashRouter as Router, Link } from "react-router-dom";
+import axios from "axios";
 import Pagination from "react-js-pagination";
 
 export default class CompanyList extends Component {
@@ -19,8 +19,10 @@ export default class CompanyList extends Component {
 
     componentDidMount() {
         axios
-            .get('/api/companies',{
-                headers: {Authorization: 'Bearer ' + this.props.token},
+            .get("/api/companies",{
+                headers: {
+                    Authorization: "Bearer " + this.props.token
+                },
             })
             .then(response => {
                 this.setState({
@@ -36,11 +38,10 @@ export default class CompanyList extends Component {
 
     handleDelete(id) {
         axios
-            .delete('/api/companies/' + id,{
-                headers: {Authorization: 'Bearer ' + this.props.token},
+            .delete("/api/companies/" + id,{
+                headers: {Authorization: "Bearer " + this.props.token},
             })
             .then(response => {
-
                 let newCompaniesData = this.state.companies_data.filter((item) => {
                     return item.id !== id;
                 });
@@ -55,8 +56,10 @@ export default class CompanyList extends Component {
 
     handlePageChange(pageNumber) {
         axios
-            .get('/api/companies?page='+pageNumber,{
-                headers: {Authorization: 'Bearer ' + this.props.token},
+            .get("/api/companies?page=" + pageNumber,{
+                headers: {
+                    Authorization: "Bearer " + this.props.token
+                },
             })
             .then(response => {
                 this.setState({
@@ -78,22 +81,26 @@ export default class CompanyList extends Component {
             )
         }
 
-        return this.state.companies_data.map(company => {
+        return this.state.companies_data.map(
+            company => {
             return (
                 <tr key={company.id}>
                     <td>{company.name}</td>
                     <td>{company.email}</td>
                     <td>{company.website}</td>
                     <td><img className="company_logo" src=
-                             {company.logo !== null ? `images/${company.logo}` : 'https://images.fineartamerica.com/images-medium-large-5/bean-digital-portrait-paul-tagliamonte.jpg'}
+                             {company.logo !== null ? `images/${company.logo}` : "https://images.fineartamerica.com/images-medium-large-5/bean-digital-portrait-paul-tagliamonte.jpg"}
 
                              alt=""/></td>
                     <td>{company.created_at}</td>
                     <td>
-                        <Link className="btn btn-warning" to={`/companies/${company.id}`}>Edit</Link>
+                        <Link
+                            className="btn btn-warning"
+                            to={`/companies/${company.id}`}>Edit</Link>
                     </td>
                     <td>
-                        <button className="btn btn-danger" onClick={() => this.handleDelete(company.id)}>
+                        <button className="btn btn-danger"
+                                onClick={() => this.handleDelete(company.id)}>
                             Delete
                         </button>
                     </td>

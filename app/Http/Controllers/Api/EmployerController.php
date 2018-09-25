@@ -1,9 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Employer;
+use App\Http\Requests\StoreEmployer;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+
 
 class EmployerController extends Controller
 {
@@ -14,8 +17,10 @@ class EmployerController extends Controller
      */
     public function index()
     {
+
         $employer = Employer::orderBy('id','desc')->paginate(8);
         return response()->json($employer);
+
     }
 
     /**
@@ -24,23 +29,17 @@ class EmployerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreEmployer $request)
     {
-        $validatedData = $request->validate([
-            'firstname' => 'required',
-            'lastname' => 'required',
-            'company' => 'required',
-            'email' => 'required',
-            'phone' => 'required',
-        ]);
 
-        if ($validatedData){
-            $employer = new Employer();
-            $employer->firstname = $request['firstname'];
-            $employer->lastname = $request['lastname'];
-            $employer->company = $request['company'];
-            $employer->email = $request['email'];
-            $employer->phone = $request['phone'];
+        $request->validated();
+
+        $employer = new Employer();
+        $employer->firstname = $request['firstname'];
+        $employer->lastname = $request['lastname'];
+        $employer->company = $request['company'];
+        $employer->email = $request['email'];
+        $employer->phone = $request['phone'];
 
 
             if ($employer->save()) {
@@ -51,7 +50,7 @@ class EmployerController extends Controller
                 $answer = 'Employer is not saved';
                 return response()->json($answer);
             }
-        }
+
     }
 
     /**
@@ -62,8 +61,10 @@ class EmployerController extends Controller
      */
     public function edit($id)
     {
+
         $employer = Employer::find($id);
         return $employer;
+
     }
 
     /**
@@ -73,31 +74,21 @@ class EmployerController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreEmployer $request, $id)
     {
 
-        $validatedData = $request->validate([
-            'firstname' => 'required',
-            'lastname' => 'required',
-            'company' => 'required',
-            'email' => 'required',
-            'phone' => 'required',
-        ]);
+        $request->validated();
 
-        if ($validatedData){
-            $employer = Employer::find($id);
-            $employer->firstname = $request['firstname'];
-            $employer->lastname = $request['lastname'];
-            $employer->company = $request['company'];
-            $employer->email = $request['email'];
-            $employer->phone = $request['phone'];
-            if ($employer->save()){
-                return response()->json(200);
-            }
+        $employer = Employer::find($id);
+        $employer->firstname = $request['firstname'];
+        $employer->lastname = $request['lastname'];
+        $employer->company = $request['company'];
+        $employer->email = $request['email'];
+        $employer->phone = $request['phone'];
+        if ($employer->save()){
+            return response()->json("Employer is updated");
         }
-        else {
-            return response()->json(404);
-        }
+        return response()->json("Something went wrong");
 
     }
 
@@ -109,6 +100,7 @@ class EmployerController extends Controller
      */
     public function destroy($id)
     {
+
         $employer=Employer::find($id);
         $employer->destroy($id);
 

@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import {HashRouter as Router, Link, Route} from 'react-router-dom';
-import CompanyList from './CompanyList';
-import CompanyAdd from './CompanyAdd';
-import CompanyEdit from './CompanyEdit'
+import React, { Component } from "react";
+import {HashRouter as Router, Link, Route} from "react-router-dom";
+import CompanyList from "./CompanyList";
+import CompanyAdd from "./CompanyAdd";
+import CompanyEdit from "./CompanyEdit"
 
 export default class CompaniesNav extends Component {
 
@@ -11,11 +11,13 @@ export default class CompaniesNav extends Component {
     }
 
     handleCompanyAdd(company) {
-        const localToken = localStorage.getItem('token');
-        axios.post('/api/companies', company, {
-            headers: {'Authorization': 'Bearer ' + localToken
-            },
-        })
+        const localToken = localStorage.getItem("token");
+        axios
+            .post("/api/companies", company, {
+                 headers: {
+                     "Authorization": "Bearer " + localToken
+                  },
+             })
             .then(response => {
 
             })
@@ -24,18 +26,19 @@ export default class CompaniesNav extends Component {
         });
     }
     handleCompanyUpdate(id,company){
-        axios.put('/api/companies/' + id , company,{
-                    headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')},
-                })
-                    .then(response=>{
-                        return true;
-                    })
-                    .catch((e)=>{
-                        console.log(e)
-                    });
-
+        axios
+            .put("/api/companies/" + id , company,{
+                    headers: {
+                        "Authorization": "Bearer " + localStorage.getItem("token")
+                    },
+            })
+            .then(response=>{
+                return true;
+            })
+            .catch((e)=>{
+                console.log(e)
+            });
     }
-
 
     render(){
         return (
@@ -43,13 +46,16 @@ export default class CompaniesNav extends Component {
                     <Router>
                         <div>
                             <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-                                <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                                <div className="collapse navbar-collapse"
+                                     id="navbarSupportedContent">
                                     <ul className="navbar-nav mr-auto">
                                         <li className="nav-item">
-                                            <Link className="nav-link btn btn-primary" to="/companies">Show all companies</Link>
+                                            <Link className="nav-link btn btn-primary"
+                                                  to="/companies">Show all companies</Link>
                                         </li>
                                         <li className="nav-item ">
-                                            <Link className="nav-link btn btn-success"  to="/companies/add">Add new Company</Link>
+                                            <Link className="nav-link btn btn-success"
+                                                  to="/companies/add">Add new Company</Link>
                                         </li>
                                     </ul>
 
@@ -58,11 +64,25 @@ export default class CompaniesNav extends Component {
 
 
                             <Route exact strict path="/companies"
-                                   render = {()=><CompanyList token={this.props.token}/>} />
+                                   render = {()=>
+                                       <CompanyList
+                                           token={this.props.token}
+                                       />}
+                            />
                             <Route exact strict path="/companies/add"
-                                   render = {()=><CompanyAdd  token={this.props.token} handleCompanyAdd={this.handleCompanyAdd} /> } />
+                                   render = {()=>
+                                       <CompanyAdd
+                                           token={this.props.token}
+                                           handleCompanyAdd={this.handleCompanyAdd}
+                                       /> }
+                            />
                             <Route exact strict path="/companies/:id"
-                                  render = {(props)=><CompanyEdit token={this.props.token} handleCompanyUpdate={this.handleCompanyUpdate} {...props}/>} />
+                                  render = {(props)=>
+                                      <CompanyEdit
+                                          token={this.props.token}
+                                          handleCompanyUpdate={this.handleCompanyUpdate} {...props}
+                                      />}
+                            />
                         </div>
                     </Router>
                 </div>

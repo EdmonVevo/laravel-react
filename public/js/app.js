@@ -15610,9 +15610,9 @@ window.Popper = __webpack_require__(19).default;
  */
 
 try {
-  window.$ = window.jQuery = __webpack_require__(20);
+    window.$ = window.jQuery = __webpack_require__(20);
 
-  __webpack_require__(40);
+    __webpack_require__(40);
 } catch (e) {}
 
 /**
@@ -15634,9 +15634,9 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 var token = document.head.querySelector('meta[name="csrf-token"]');
 
 if (token) {
-  window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
 } else {
-  console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+    console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
 
 /**
@@ -15644,17 +15644,6 @@ if (token) {
  * for events that are broadcast by Laravel. Echo and event broadcasting
  * allows your team to easily build robust real-time web applications.
  */
-
-// import Echo from 'laravel-echo'
-
-// window.Pusher = require('pusher-js');
-
-// window.Echo = new Echo({
-//     broadcaster: 'pusher',
-//     key: process.env.MIX_PUSHER_APP_KEY,
-//     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-//     encrypted: true
-// });
 
 /***/ }),
 /* 38 */
@@ -37874,7 +37863,7 @@ var Index = function (_Component) {
         var _this = _possibleConstructorReturn(this, (Index.__proto__ || Object.getPrototypeOf(Index)).call(this, props));
 
         _this.state = {
-            token: '',
+            token: "",
             loginStatus: false
         };
         _this.checkLoginStatus = _this.checkLoginStatus.bind(_this);
@@ -37884,36 +37873,38 @@ var Index = function (_Component) {
     }
 
     _createClass(Index, [{
-        key: 'checkLoginStatus',
+        key: "checkLoginStatus",
         value: function checkLoginStatus() {
             return this.state.loginStatus;
         }
     }, {
-        key: 'componentDidMount',
+        key: "componentDidMount",
         value: function componentDidMount() {
             var _this2 = this;
 
             var loginToken = localStorage.token;
             if (loginToken.length !== 0) {
-                __WEBPACK_IMPORTED_MODULE_7_axios___default.a.post('/api/me', {}, {
-                    headers: { 'Authorization': 'Bearer ' + loginToken }
+                __WEBPACK_IMPORTED_MODULE_7_axios___default.a.post("/api/me", {}, {
+                    headers: { "Authorization": "Bearer " + loginToken }
                 }).then(function (response) {
-                    _this2.setState({ token: loginToken });
-                }).then(function () {
-                    _this2.setState({ loginStatus: true });
+                    _this2.setState({
+                        token: loginToken,
+                        loginStatus: true
+                    });
                 }).catch(function (e) {
+                    _this2.setState({ loginStatus: false });
                     throw new Error(e);
                 });
             }
         }
     }, {
-        key: 'handleLogin',
+        key: "handleLogin",
         value: function handleLogin(data) {
             var _this3 = this;
 
-            __WEBPACK_IMPORTED_MODULE_7_axios___default.a.post('api/login', data).then(function (response) {
+            __WEBPACK_IMPORTED_MODULE_7_axios___default.a.post("api/login", data).then(function (response) {
                 _this3.setState({ token: response.data.token });
-                localStorage.setItem('token', response.data.token);
+                localStorage.setItem("token", response.data.token);
             }).then(function () {
                 _this3.setState({ loginStatus: true });
             }).catch(function (e) {
@@ -37921,26 +37912,26 @@ var Index = function (_Component) {
             });
         }
     }, {
-        key: 'handleLogout',
+        key: "handleLogout",
         value: function handleLogout() {
             var _this4 = this;
 
-            __WEBPACK_IMPORTED_MODULE_7_axios___default.a.post('/api/logout', { token: this.state.token }, {
-                headers: { 'Authorization': 'Bearer ' + this.state.token }
+            __WEBPACK_IMPORTED_MODULE_7_axios___default.a.post("/api/logout", { token: this.state.token }, {
+                headers: { "Authorization": "Bearer " + this.state.token }
             }).then(function (response) {
                 if (response.data.success) {
                     return true;
                 } else {
                     _this4.setState({ loginStatus: false });
-                    _this4.setState({ token: '' });
-                    localStorage.token = '';
+                    _this4.setState({ token: "" });
+                    localStorage.token = "";
                 }
             }).catch(function (e) {
                 throw new Error(e);
             });
         }
     }, {
-        key: 'render',
+        key: "render",
         value: function render() {
             var _this5 = this;
 
@@ -37948,21 +37939,50 @@ var Index = function (_Component) {
                 __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["a" /* HashRouter */],
                 null,
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'container' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__Header__["a" /* default */], { login: this.checkLoginStatus(), logout: this.handleLogout }),
+                    "div",
+                    { className: "container" },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__Header__["a" /* default */], {
+                        login: this.checkLoginStatus(),
+                        logout: this.handleLogout
+                    }),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["f" /* Switch */],
                         null,
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["e" /* Route */], { exact: true, strict: true, path: '/welcome', component: __WEBPACK_IMPORTED_MODULE_6__Welcome__["a" /* default */] }),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["e" /* Route */], { exact: true, strict: true, path: '/login', render: function render(props) {
-                                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__Login__["a" /* default */], _extends({ handleLogin: _this5.handleLogin, loginStatus: _this5.state.loginStatus }, props));
-                            } }),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__PrivateRoute__["a" /* default */], { path: '/', loginStatus: this.state.loginStatus, component: __WEBPACK_IMPORTED_MODULE_9__Navigation__["a" /* default */], token: this.state.token })
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["e" /* Route */], { exact: true, strict: true,
+                            path: "/welcome",
+                            component: __WEBPACK_IMPORTED_MODULE_6__Welcome__["a" /* default */]
+                        }),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["e" /* Route */], { exact: true, strict: true,
+                            path: "/login",
+                            render: function render(props) {
+                                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__Login__["a" /* default */], _extends({
+                                    handleLogin: _this5.handleLogin,
+                                    loginStatus: _this5.state.loginStatus }, props));
+                            }
+                        }),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__PrivateRoute__["a" /* default */], {
+                            path: "/",
+                            loginStatus: this.state.loginStatus,
+                            component: __WEBPACK_IMPORTED_MODULE_9__Navigation__["a" /* default */],
+                            token: this.state.token
+                        })
                     ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__PrivateRoute__["a" /* default */], { path: '/home', loginStatus: this.state.loginStatus, component: __WEBPACK_IMPORTED_MODULE_5__Home__["a" /* default */], token: this.state.token }),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__PrivateRoute__["a" /* default */], { path: '/companies', component: __WEBPACK_IMPORTED_MODULE_10__company_CompaniesNav__["a" /* default */], loginStatus: this.state.loginStatus, token: this.state.token }),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__PrivateRoute__["a" /* default */], { path: '/employees', component: __WEBPACK_IMPORTED_MODULE_11__employer_EmployeesNav__["a" /* default */], loginStatus: this.state.loginStatus, token: this.state.token })
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__PrivateRoute__["a" /* default */], {
+                        path: "/home",
+                        loginStatus: this.state.loginStatus,
+                        component: __WEBPACK_IMPORTED_MODULE_5__Home__["a" /* default */],
+                        token: this.state.token
+                    }),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__PrivateRoute__["a" /* default */], {
+                        path: "/companies",
+                        component: __WEBPACK_IMPORTED_MODULE_10__company_CompaniesNav__["a" /* default */],
+                        loginStatus: this.state.loginStatus, token: this.state.token
+                    }),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__PrivateRoute__["a" /* default */], {
+                        path: "/employees",
+                        component: __WEBPACK_IMPORTED_MODULE_11__employer_EmployeesNav__["a" /* default */],
+                        loginStatus: this.state.loginStatus, token: this.state.token
+                    })
                 )
             );
         }
@@ -37974,8 +37994,8 @@ var Index = function (_Component) {
 /* harmony default export */ __webpack_exports__["default"] = (Index);
 
 
-if (document.getElementById('app')) {
-    __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Index, null), document.getElementById('app'));
+if (document.getElementById("app")) {
+    __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Index, null), document.getElementById("app"));
 }
 
 /***/ }),
@@ -61446,7 +61466,9 @@ var Header = function (_Component) {
                                         { className: 'dropdown-menu', 'aria-labelledby': 'navbarDropdown' },
                                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                             __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* NavLink */],
-                                            { to: '/', onClick: this.handleLogout, className: 'dropdown-item', replace: true },
+                                            { to: '/',
+                                                onClick: this.handleLogout,
+                                                className: 'dropdown-item', replace: true },
                                             'Logout'
                                         )
                                     )
@@ -61568,7 +61590,8 @@ var Login = function (_Component) {
                                     { className: 'card-body' },
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                         'form',
-                                        { onSubmit: this.handleSubmit },
+                                        {
+                                            onSubmit: this.handleSubmit },
                                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                             'div',
                                             { className: 'form-group row' },
@@ -61581,7 +61604,8 @@ var Login = function (_Component) {
                                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                                 'div',
                                                 { className: 'col-md-6' },
-                                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { onChange: this.handleChange, id: 'email', type: 'email', className: 'form-control', name: 'email', value: this.state.email, required: true })
+                                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                                                    onChange: this.handleChange, id: 'email', type: 'email', className: 'form-control', name: 'email', value: this.state.email, required: true })
                                             )
                                         ),
                                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -61596,7 +61620,8 @@ var Login = function (_Component) {
                                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                                 'div',
                                                 { className: 'col-md-6' },
-                                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { onChange: this.handleChange, id: 'password', type: 'password', className: 'form-control', autoComplete: 'current-password',
+                                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                                                    onChange: this.handleChange, id: 'password', type: 'password', className: 'form-control', autoComplete: 'current-password',
                                                     name: 'password', value: this.state.password, required: true })
                                             )
                                         ),
@@ -61635,49 +61660,24 @@ var Login = function (_Component) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 /**
  * Created by Edmon on 9/5/2018.
  */
 
 
-var Home = function (_Component) {
-    _inherits(Home, _Component);
-
-    function Home() {
-        _classCallCheck(this, Home);
-
-        return _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).apply(this, arguments));
-    }
-
-    _createClass(Home, [{
-        key: "render",
-        value: function render() {
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                "div",
-                { className: "homepage" },
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "h1",
-                    null,
-                    "Olaaa Hompage"
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("br", null)
-            );
-        }
-    }]);
-
-    return Home;
-}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
-
+var Home = function Home() {
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        "div",
+        { className: "homepage" },
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            "h1",
+            null,
+            "Olaaa Hompage"
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("br", null)
+    );
+};
 /* harmony default export */ __webpack_exports__["a"] = (Home);
-;
 
 /***/ }),
 /* 96 */
@@ -61686,46 +61686,21 @@ var Home = function (_Component) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 
-
-var Welcome = function (_Component) {
-    _inherits(Welcome, _Component);
-
-    function Welcome() {
-        _classCallCheck(this, Welcome);
-
-        return _possibleConstructorReturn(this, (Welcome.__proto__ || Object.getPrototypeOf(Welcome)).apply(this, arguments));
-    }
-
-    _createClass(Welcome, [{
-        key: "render",
-        value: function render() {
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                "div",
-                { className: "homepage" },
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "h1",
-                    null,
-                    "Welcome! Login to continue"
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("br", null)
-            );
-        }
-    }]);
-
-    return Welcome;
-}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
-
+var Welcome = function Welcome() {
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        "div",
+        { className: "homepage" },
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            "h1",
+            null,
+            "Welcome! Login to continue"
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("br", null)
+    );
+};
 /* harmony default export */ __webpack_exports__["a"] = (Welcome);
-;
 
 /***/ }),
 /* 97 */
@@ -61749,7 +61724,9 @@ var PrivateRoute = function PrivateRoute(_ref) {
         rest = _objectWithoutProperties(_ref, ["component", "loginStatus", "token"]);
 
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["e" /* Route */], _extends({}, rest, { render: function render(props) {
-            return loginStatus === true ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Component, { loginStatus: loginStatus, token: token }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["d" /* Redirect */], { to: "/login" });
+            return loginStatus === true ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Component, {
+                loginStatus: loginStatus,
+                token: token }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["d" /* Redirect */], { to: "/login" });
         }
     }));
 };
@@ -61764,81 +61741,59 @@ var PrivateRoute = function PrivateRoute(_ref) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router_dom__ = __webpack_require__(3);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 
 
-
-var Navigation = function (_Component) {
-    _inherits(Navigation, _Component);
-
-    function Navigation() {
-        _classCallCheck(this, Navigation);
-
-        return _possibleConstructorReturn(this, (Navigation.__proto__ || Object.getPrototypeOf(Navigation)).apply(this, arguments));
-    }
-
-    _createClass(Navigation, [{
-        key: 'render',
-        value: function render() {
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'div',
-                null,
+var Navigation = function Navigation() {
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        "div",
+        null,
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["a" /* HashRouter */],
+            null,
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                "nav",
+                { className: "navbar navbar-expand-lg navbar-dark bg-dark" },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["a" /* HashRouter */],
-                    null,
+                    "div",
+                    { className: "collapse navbar-collapse",
+                        id: "navbarSupportedContent" },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'nav',
-                        { className: 'navbar navbar-expand-lg navbar-dark bg-dark' },
+                        "ul",
+                        { className: "navbar-nav mr-auto" },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'div',
-                            { className: 'collapse navbar-collapse', id: 'navbarSupportedContent' },
+                            "li",
+                            { className: "nav-item" },
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'ul',
-                                { className: 'navbar-nav mr-auto' },
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    'li',
-                                    { className: 'nav-item' },
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
-                                        { className: 'nav-link', to: '/home' },
-                                        'Home'
-                                    )
-                                ),
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    'li',
-                                    { className: 'nav-item' },
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
-                                        { className: 'nav-link', to: '/companies' },
-                                        'Companies'
-                                    )
-                                ),
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    'li',
-                                    { className: 'nav-item' },
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
-                                        { className: 'nav-link disabled', to: '/employees' },
-                                        'Employees'
-                                    )
-                                )
+                                __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
+                                { className: "nav-link", to: "home" },
+                                "Home"
+                            )
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "li",
+                            { className: "nav-item" },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
+                                { className: "nav-link", to: "/companies" },
+                                "Companies"
+                            )
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "li",
+                            { className: "nav-item" },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
+                                { className: "nav-link disabled", to: "/employees" },
+                                "Employees"
                             )
                         )
                     )
                 )
-            );
-        }
-    }]);
-
-    return Navigation;
-}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+            )
+        )
+    );
+};
 
 /* harmony default export */ __webpack_exports__["a"] = (Navigation);
 
@@ -61879,21 +61834,24 @@ var CompaniesNav = function (_Component) {
     }
 
     _createClass(CompaniesNav, [{
-        key: 'handleCompanyAdd',
+        key: "handleCompanyAdd",
         value: function handleCompanyAdd(company) {
-            var localToken = localStorage.getItem('token');
-            axios.post('/api/companies', company, {
-                headers: { 'Authorization': 'Bearer ' + localToken
+            var localToken = localStorage.getItem("token");
+            axios.post("/api/companies", company, {
+                headers: {
+                    "Authorization": "Bearer " + localToken
                 }
             }).then(function (response) {}).catch(function (e) {
                 console.log(e);
             });
         }
     }, {
-        key: 'handleCompanyUpdate',
+        key: "handleCompanyUpdate",
         value: function handleCompanyUpdate(id, company) {
-            axios.put('/api/companies/' + id, company, {
-                headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
+            axios.put("/api/companies/" + id, company, {
+                headers: {
+                    "Authorization": "Bearer " + localStorage.getItem("token")
+                }
             }).then(function (response) {
                 return true;
             }).catch(function (e) {
@@ -61901,61 +61859,74 @@ var CompaniesNav = function (_Component) {
             });
         }
     }, {
-        key: 'render',
+        key: "render",
         value: function render() {
             var _this2 = this;
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'div',
+                "div",
                 null,
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["a" /* HashRouter */],
                     null,
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
+                        "div",
                         null,
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'nav',
-                            { className: 'navbar navbar-expand-lg navbar-dark bg-dark' },
+                            "nav",
+                            { className: "navbar navbar-expand-lg navbar-dark bg-dark" },
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'div',
-                                { className: 'collapse navbar-collapse', id: 'navbarSupportedContent' },
+                                "div",
+                                { className: "collapse navbar-collapse",
+                                    id: "navbarSupportedContent" },
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    'ul',
-                                    { className: 'navbar-nav mr-auto' },
+                                    "ul",
+                                    { className: "navbar-nav mr-auto" },
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        'li',
-                                        { className: 'nav-item' },
+                                        "li",
+                                        { className: "nav-item" },
                                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                             __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
-                                            { className: 'nav-link btn btn-primary', to: '/companies' },
-                                            'Show all companies'
+                                            { className: "nav-link btn btn-primary",
+                                                to: "/companies" },
+                                            "Show all companies"
                                         )
                                     ),
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        'li',
-                                        { className: 'nav-item ' },
+                                        "li",
+                                        { className: "nav-item " },
                                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                             __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
-                                            { className: 'nav-link btn btn-success', to: '/companies/add' },
-                                            'Add new Company'
+                                            { className: "nav-link btn btn-success",
+                                                to: "/companies/add" },
+                                            "Add new Company"
                                         )
                                     )
                                 )
                             )
                         ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["e" /* Route */], { exact: true, strict: true, path: '/companies',
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["e" /* Route */], { exact: true, strict: true, path: "/companies",
                             render: function render() {
-                                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__CompanyList__["a" /* default */], { token: _this2.props.token });
-                            } }),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["e" /* Route */], { exact: true, strict: true, path: '/companies/add',
+                                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__CompanyList__["a" /* default */], {
+                                    token: _this2.props.token
+                                });
+                            }
+                        }),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["e" /* Route */], { exact: true, strict: true, path: "/companies/add",
                             render: function render() {
-                                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__CompanyAdd__["a" /* default */], { token: _this2.props.token, handleCompanyAdd: _this2.handleCompanyAdd });
-                            } }),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["e" /* Route */], { exact: true, strict: true, path: '/companies/:id',
+                                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__CompanyAdd__["a" /* default */], {
+                                    token: _this2.props.token,
+                                    handleCompanyAdd: _this2.handleCompanyAdd
+                                });
+                            }
+                        }),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["e" /* Route */], { exact: true, strict: true, path: "/companies/:id",
                             render: function render(props) {
-                                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__CompanyEdit__["a" /* default */], _extends({ token: _this2.props.token, handleCompanyUpdate: _this2.handleCompanyUpdate }, props));
-                            } })
+                                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__CompanyEdit__["a" /* default */], _extends({
+                                    token: _this2.props.token,
+                                    handleCompanyUpdate: _this2.handleCompanyUpdate }, props));
+                            }
+                        })
                     )
                 )
             );
@@ -62013,12 +61984,14 @@ var CompanyList = function (_Component) {
     }
 
     _createClass(CompanyList, [{
-        key: 'componentDidMount',
+        key: "componentDidMount",
         value: function componentDidMount() {
             var _this2 = this;
 
-            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get('/api/companies', {
-                headers: { Authorization: 'Bearer ' + this.props.token }
+            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("/api/companies", {
+                headers: {
+                    Authorization: "Bearer " + this.props.token
+                }
             }).then(function (response) {
                 _this2.setState({
                     companies_data: response.data.data,
@@ -62031,14 +62004,13 @@ var CompanyList = function (_Component) {
             });
         }
     }, {
-        key: 'handleDelete',
+        key: "handleDelete",
         value: function handleDelete(id) {
             var _this3 = this;
 
-            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.delete('/api/companies/' + id, {
-                headers: { Authorization: 'Bearer ' + this.props.token }
+            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.delete("/api/companies/" + id, {
+                headers: { Authorization: "Bearer " + this.props.token }
             }).then(function (response) {
-
                 var newCompaniesData = _this3.state.companies_data.filter(function (item) {
                     return item.id !== id;
                 });
@@ -62050,12 +62022,14 @@ var CompanyList = function (_Component) {
             });
         }
     }, {
-        key: 'handlePageChange',
+        key: "handlePageChange",
         value: function handlePageChange(pageNumber) {
             var _this4 = this;
 
-            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get('/api/companies?page=' + pageNumber, {
-                headers: { Authorization: 'Bearer ' + this.props.token }
+            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("/api/companies?page=" + pageNumber, {
+                headers: {
+                    Authorization: "Bearer " + this.props.token
+                }
             }).then(function (response) {
                 _this4.setState({
                     companies_data: response.data.data,
@@ -62068,137 +62042,140 @@ var CompanyList = function (_Component) {
             });
         }
     }, {
-        key: 'renderItems',
+        key: "renderItems",
         value: function renderItems() {
             var _this5 = this;
 
             if (!this.state.companies_data.length) {
-                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tr', null);
+                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("tr", null);
             }
 
             return this.state.companies_data.map(function (company) {
                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'tr',
+                    "tr",
                     { key: company.id },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'td',
+                        "td",
                         null,
                         company.name
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'td',
+                        "td",
                         null,
                         company.email
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'td',
+                        "td",
                         null,
                         company.website
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'td',
+                        "td",
                         null,
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { className: 'company_logo', src: company.logo !== null ? 'images/' + company.logo : 'https://images.fineartamerica.com/images-medium-large-5/bean-digital-portrait-paul-tagliamonte.jpg',
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("img", { className: "company_logo", src: company.logo !== null ? "images/" + company.logo : "https://images.fineartamerica.com/images-medium-large-5/bean-digital-portrait-paul-tagliamonte.jpg",
 
-                            alt: '' })
+                            alt: "" })
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'td',
+                        "td",
                         null,
                         company.created_at
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'td',
+                        "td",
                         null,
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
-                            { className: 'btn btn-warning', to: '/companies/' + company.id },
-                            'Edit'
+                            {
+                                className: "btn btn-warning",
+                                to: "/companies/" + company.id },
+                            "Edit"
                         )
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'td',
+                        "td",
                         null,
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'button',
-                            { className: 'btn btn-danger', onClick: function onClick() {
+                            "button",
+                            { className: "btn btn-danger",
+                                onClick: function onClick() {
                                     return _this5.handleDelete(company.id);
                                 } },
-                            'Delete'
+                            "Delete"
                         )
                     )
                 );
             });
         }
     }, {
-        key: 'render',
+        key: "render",
         value: function render() {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'div',
+                "div",
                 null,
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'table',
-                    { className: 'table' },
+                    "table",
+                    { className: "table" },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'thead',
+                        "thead",
                         null,
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'tr',
+                            "tr",
                             null,
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'th',
-                                { scope: 'col' },
-                                'Name'
+                                "th",
+                                { scope: "col" },
+                                "Name"
                             ),
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'th',
-                                { scope: 'col' },
-                                'Email'
+                                "th",
+                                { scope: "col" },
+                                "Email"
                             ),
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'th',
-                                { scope: 'col' },
-                                'Website'
+                                "th",
+                                { scope: "col" },
+                                "Website"
                             ),
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'th',
-                                { scope: 'col' },
-                                'Logo'
+                                "th",
+                                { scope: "col" },
+                                "Logo"
                             ),
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'th',
-                                { scope: 'col' },
-                                'Created at'
+                                "th",
+                                { scope: "col" },
+                                "Created at"
                             ),
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'th',
-                                { scope: 'col' },
-                                'Edit'
+                                "th",
+                                { scope: "col" },
+                                "Edit"
                             ),
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'th',
-                                { scope: 'col' },
-                                'Remove'
+                                "th",
+                                { scope: "col" },
+                                "Remove"
                             )
                         )
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'tbody',
+                        "tbody",
                         null,
                         this.renderItems()
                     )
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'd-flex justify-content-center' },
+                    "div",
+                    { className: "d-flex justify-content-center" },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3_react_js_pagination___default.a, {
                         activePage: this.state.activePage,
                         itemsCountPerPage: this.state.itemsCountPerPage,
                         totalItemsCount: this.state.totalItemsCount,
                         pageRangeDisplayed: this.state.pageRangeDisplayed,
                         onChange: this.handlePageChange,
-                        itemClass: 'page-item',
-                        linkClass: 'page-link'
+                        itemClass: "page-item",
+                        linkClass: "page-link"
                     })
                 )
             );
@@ -62339,12 +62316,12 @@ var CompanyList = function (_Component) {
         var _this = _possibleConstructorReturn(this, (CompanyList.__proto__ || Object.getPrototypeOf(CompanyList)).call(this, props));
 
         _this.state = {
-            name: '',
-            email: '',
-            website: '',
-            logo: '',
-            message: '',
-            messageType: ''
+            name: "",
+            email: "",
+            website: "",
+            logo: "",
+            message: "",
+            messageType: ""
         };
         _this.handleOnChange = _this.handleOnChange.bind(_this);
         _this.handleOnSubmit = _this.handleOnSubmit.bind(_this);
@@ -62354,12 +62331,12 @@ var CompanyList = function (_Component) {
     }
 
     _createClass(CompanyList, [{
-        key: 'handleOnChange',
+        key: "handleOnChange",
         value: function handleOnChange(e) {
             this.setState(_defineProperty({}, e.target.name, e.target.value));
         }
     }, {
-        key: 'handleOnSubmit',
+        key: "handleOnSubmit",
         value: function handleOnSubmit(e) {
             e.preventDefault();
             var _state = this.state,
@@ -62368,10 +62345,10 @@ var CompanyList = function (_Component) {
                 website = _state.website,
                 logo = _state.logo;
 
-            if (name == '' || email == '' || website == '') {
+            if (name == "" || email == "" || website == "") {
                 this.setState({
-                    message: 'Empty fields',
-                    messageType: 'alert alert-danger'
+                    message: "Empty fields",
+                    messageType: "alert alert-danger"
                 });
             } else {
                 var CompanyInfo = {
@@ -62382,20 +62359,20 @@ var CompanyList = function (_Component) {
                 };
                 this.props.handleCompanyAdd(CompanyInfo);
                 this.setState({
-                    message: 'Company is created',
-                    messageType: 'alert alert-success'
+                    message: "Company is created",
+                    messageType: "alert alert-success"
                 });
             }
         }
     }, {
-        key: 'handleFileOnChange',
+        key: "handleFileOnChange",
         value: function handleFileOnChange(e) {
             var files = e.target.files || e.dataTransfer.files;
             if (!files.length) return;
             this.createImage(files[0]);
         }
     }, {
-        key: 'createImage',
+        key: "createImage",
         value: function createImage(file) {
             var _this2 = this;
 
@@ -62408,72 +62385,79 @@ var CompanyList = function (_Component) {
             reader.readAsDataURL(file);
         }
     }, {
-        key: 'render',
+        key: "render",
         value: function render() {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'div',
+                "div",
                 null,
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'form',
-                    { name: 'company_form', className: 'add_company', onSubmit: this.handleOnSubmit, encType: 'multipart/form-data' },
+                    "form",
+                    { name: "company_form",
+                        className: "add_company",
+                        onSubmit: this.handleOnSubmit,
+                        encType: "multipart/form-data" },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: this.state.messageType, role: 'alert' },
+                        "div",
+                        { className: this.state.messageType, role: "alert" },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'h3',
+                            "h3",
                             null,
                             this.state.message
                         )
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'form-group' },
+                        "div",
+                        { className: "form-group" },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'label',
-                            { htmlFor: 'name' },
-                            'Name'
+                            "label",
+                            { htmlFor: "name" },
+                            "Name"
                         ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', name: 'name', className: 'form-control', id: 'name', placeholder: 'Enter name', onChange: this.handleOnChange, value: this.state.name })
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { type: "text", name: "name", className: "form-control", id: "name", placeholder: "Enter name",
+                            onChange: this.handleOnChange, value: this.state.name })
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'form-group' },
+                        "div",
+                        { className: "form-group" },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'label',
-                            { htmlFor: 'exampleInputEmail1' },
-                            'Email address'
+                            "label",
+                            { htmlFor: "exampleInputEmail1" },
+                            "Email address"
                         ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'email', name: 'email', className: 'form-control', id: 'email', placeholder: 'Enter email', onChange: this.handleOnChange, value: this.state.email }),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { type: "email", name: "email", className: "form-control", id: "email", placeholder: "Enter email",
+                            onChange: this.handleOnChange, value: this.state.email }),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'small',
-                            { id: 'emailHelp', className: 'form-text text-muted' },
-                            'We\'ll never share your email with anyone else.'
+                            "small",
+                            { id: "emailHelp", className: "form-text text-muted" },
+                            "We\"ll never share your email with anyone else."
                         )
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'form-group' },
+                        "div",
+                        { className: "form-group" },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'label',
-                            { htmlFor: 'website' },
-                            'Website'
+                            "label",
+                            { htmlFor: "website" },
+                            "Website"
                         ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', name: 'website', className: 'form-control', id: 'website', placeholder: 'Enter website', onChange: this.handleOnChange, value: this.state.website })
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { type: "text", name: "website", className: "form-control", id: "website", placeholder: "Enter website",
+                            onChange: this.handleOnChange, value: this.state.website })
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'form-group' },
+                        "div",
+                        { className: "form-group" },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'label',
-                            { htmlFor: 'logo' },
-                            'Logo'
+                            "label",
+                            { htmlFor: "logo" },
+                            "Logo"
                         ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'file', name: 'logo', id: 'logo', className: 'form-control', onChange: this.handleFileOnChange })
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { type: "file", name: "logo", id: "logo", className: "form-control",
+                            onChange: this.handleFileOnChange })
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'button',
-                        { type: 'submit', name: 'submit', className: 'btn btn-primary' },
-                        'Submit'
+                        "button",
+                        { type: "submit", name: "submit", className: "btn btn-primary" },
+                        "Submit"
                     )
                 )
             );
@@ -62516,12 +62500,12 @@ var CompanyEdit = function (_Component) {
         var _this = _possibleConstructorReturn(this, (CompanyEdit.__proto__ || Object.getPrototypeOf(CompanyEdit)).call(this, props));
 
         _this.state = {
-            name: '',
-            email: '',
-            website: '',
-            logo: '',
-            message: '',
-            messageType: ''
+            name: "",
+            email: "",
+            website: "",
+            logo: "",
+            message: "",
+            messageType: ""
         };
         _this.handleOnChange = _this.handleOnChange.bind(_this);
         _this.handleOnSubmit = _this.handleOnSubmit.bind(_this);
@@ -62530,16 +62514,16 @@ var CompanyEdit = function (_Component) {
 
         return _this;
     }
-    //
-
 
     _createClass(CompanyEdit, [{
-        key: 'componentWillMount',
+        key: "componentWillMount",
         value: function componentWillMount() {
             var _this2 = this;
 
-            __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get('/api/companies/' + this.props.match.params.id, {
-                headers: { 'Authorization': 'Bearer ' + this.props.token }
+            __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get("/api/companies/" + this.props.match.params.id, {
+                headers: {
+                    "Authorization": "Bearer " + this.props.token
+                }
             }).then(function (response) {
                 _this2.setState({
                     name: response.data.name,
@@ -62551,14 +62535,12 @@ var CompanyEdit = function (_Component) {
             });
         }
     }, {
-        key: 'handleOnChange',
+        key: "handleOnChange",
         value: function handleOnChange(e) {
             this.setState(_defineProperty({}, e.target.name, e.target.value));
         }
-        //
-
     }, {
-        key: 'handleOnSubmit',
+        key: "handleOnSubmit",
         value: function handleOnSubmit(e) {
             e.preventDefault();
             var company_information = this.state;
@@ -62568,29 +62550,29 @@ var CompanyEdit = function (_Component) {
                 website = _state.website,
                 logo = _state.logo;
 
-            if (name == '' || email == '' || website == '') {
+            if (name == "" || email == "" || website == "") {
                 this.setState({
-                    message: 'Empty fields',
-                    messageType: 'alert alert-danger'
+                    message: "Empty fields",
+                    messageType: "alert alert-danger"
                 });
             } else {
                 var id = this.props.match.params.id;
                 this.props.handleCompanyUpdate(id, company_information);
                 this.setState({
-                    message: 'Company is updated',
-                    messageType: 'alert alert-success'
+                    message: "Company is updated",
+                    messageType: "alert alert-success"
                 });
             }
         }
     }, {
-        key: 'handleFileOnChange',
+        key: "handleFileOnChange",
         value: function handleFileOnChange(e) {
             var files = e.target.files || e.dataTransfer.files;
             if (!files.length) return;
             this.createImage(files[0]);
         }
     }, {
-        key: 'createImage',
+        key: "createImage",
         value: function createImage(file) {
             var _this3 = this;
 
@@ -62603,72 +62585,79 @@ var CompanyEdit = function (_Component) {
             reader.readAsDataURL(file);
         }
     }, {
-        key: 'render',
+        key: "render",
         value: function render() {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'div',
+                "div",
                 null,
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'form',
-                    { name: 'company_form', className: 'add_company', onSubmit: this.handleOnSubmit, encType: 'multipart/form-data' },
+                    "form",
+                    { name: "company_form",
+                        className: "add_company",
+                        onSubmit: this.handleOnSubmit,
+                        encType: "multipart/form-data" },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: this.state.messageType, role: 'alert' },
+                        "div",
+                        { className: this.state.messageType, role: "alert" },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'h3',
+                            "h3",
                             null,
                             this.state.message
                         )
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'form-group' },
+                        "div",
+                        { className: "form-group" },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'label',
-                            { htmlFor: 'name' },
-                            'Name'
+                            "label",
+                            { htmlFor: "name" },
+                            "Name"
                         ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', name: 'name', className: 'form-control', id: 'name', placeholder: 'Enter name', onChange: this.handleOnChange, value: this.state.name })
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { type: "text", name: "name", className: "form-control", id: "name", placeholder: "Enter name",
+                            onChange: this.handleOnChange, value: this.state.name })
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'form-group' },
+                        "div",
+                        { className: "form-group" },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'label',
-                            { htmlFor: 'exampleInputEmail1' },
-                            'Email address'
+                            "label",
+                            { htmlFor: "exampleInputEmail1" },
+                            "Email address"
                         ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'email', name: 'email', className: 'form-control', id: 'email', placeholder: 'Enter email', onChange: this.handleOnChange, value: this.state.email }),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { type: "email", name: "email", className: "form-control", id: "email", placeholder: "Enter email",
+                            onChange: this.handleOnChange, value: this.state.email }),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'small',
-                            { id: 'emailHelp', className: 'form-text text-muted' },
-                            'We\'ll never share your email with anyone else.'
+                            "small",
+                            { id: "emailHelp", className: "form-text text-muted" },
+                            "We\"ll never share your email with anyone else."
                         )
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'form-group' },
+                        "div",
+                        { className: "form-group" },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'label',
-                            { htmlFor: 'website' },
-                            'Website'
+                            "label",
+                            { htmlFor: "website" },
+                            "Website"
                         ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', name: 'website', className: 'form-control', id: 'website', placeholder: 'Enter website', onChange: this.handleOnChange, value: this.state.website })
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { type: "text", name: "website", className: "form-control", id: "website", placeholder: "Enter website",
+                            onChange: this.handleOnChange, value: this.state.website })
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'form-group' },
+                        "div",
+                        { className: "form-group" },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'label',
-                            { htmlFor: 'logo' },
-                            'Logo'
+                            "label",
+                            { htmlFor: "logo" },
+                            "Logo"
                         ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'file', name: 'logo', id: 'logo', className: 'form-control', onChange: this.handleFileOnChange })
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { type: "file", name: "logo", id: "logo", className: "form-control",
+                            onChange: this.handleFileOnChange })
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'button',
-                        { type: 'submit', name: 'submit', className: 'btn btn-primary' },
-                        'Submit'
+                        "button",
+                        { type: "submit", name: "submit", className: "btn btn-primary" },
+                        "Submit"
                     )
                 )
             );
@@ -62853,12 +62842,14 @@ var EmployerList = function (_Component) {
     }
 
     _createClass(EmployerList, [{
-        key: 'componentDidMount',
+        key: "componentDidMount",
         value: function componentDidMount() {
             var _this2 = this;
 
-            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get('api/employees', {
-                headers: { Authorization: 'Bearer ' + this.props.token }
+            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("api/employees", {
+                headers: {
+                    Authorization: "Bearer " + this.props.token
+                }
             }).then(function (response) {
                 _this2.setState({
                     employees_data: response.data.data,
@@ -62871,14 +62862,15 @@ var EmployerList = function (_Component) {
             });
         }
     }, {
-        key: 'handleDelete',
+        key: "handleDelete",
         value: function handleDelete(id) {
             var _this3 = this;
 
-            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.delete('/api/employees/' + id, {
-                headers: { Authorization: 'Bearer ' + this.props.token }
+            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.delete("/api/employees/" + id, {
+                headers: {
+                    Authorization: "Bearer " + this.props.token
+                }
             }).then(function (response) {
-
                 var newEmployerData = _this3.state.employees_data.filter(function (item) {
                     return item.id != id;
                 });
@@ -62890,12 +62882,12 @@ var EmployerList = function (_Component) {
             });
         }
     }, {
-        key: 'handlePageChange',
+        key: "handlePageChange",
         value: function handlePageChange(pageNumber) {
             var _this4 = this;
 
-            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get('api/employees?page=' + pageNumber, {
-                headers: { Authorization: 'Bearer ' + this.props.token }
+            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("api/employees?page=" + pageNumber, {
+                headers: { Authorization: "Bearer " + this.props.token }
             }).then(function (response) {
                 _this4.setState({
                     employees_data: response.data.data,
@@ -62909,145 +62901,148 @@ var EmployerList = function (_Component) {
             });
         }
     }, {
-        key: 'renderItems',
+        key: "renderItems",
         value: function renderItems() {
             var _this5 = this;
 
             if (!this.state.employees_data.length) {
-                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('tr', null);
+                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("tr", null);
             }
 
             return this.state.employees_data.map(function (employer) {
                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'tr',
+                    "tr",
                     { key: employer.id },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'td',
+                        "td",
                         null,
                         employer.firstname
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'td',
+                        "td",
                         null,
                         employer.lastname
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'td',
+                        "td",
                         null,
                         employer.company
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'td',
+                        "td",
                         null,
                         employer.email
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'td',
+                        "td",
                         null,
                         employer.phone
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'td',
+                        "td",
                         null,
                         employer.created_at
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'td',
+                        "td",
                         null,
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
-                            { className: 'btn btn-warning', to: '/employees/' + employer.id },
-                            'Edit'
+                            {
+                                className: "btn btn-warning",
+                                to: "/employees/" + employer.id },
+                            "Edit"
                         )
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'td',
+                        "td",
                         null,
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'button',
-                            { className: 'btn btn-danger', onClick: function onClick() {
+                            "button",
+                            { className: "btn btn-danger",
+                                onClick: function onClick() {
                                     return _this5.handleDelete(employer.id);
                                 } },
-                            'Delete'
+                            "Delete"
                         )
                     )
                 );
             });
         }
     }, {
-        key: 'render',
+        key: "render",
         value: function render() {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'div',
+                "div",
                 null,
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'table',
-                    { className: 'table' },
+                    "table",
+                    { className: "table" },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'thead',
+                        "thead",
                         null,
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'tr',
+                            "tr",
                             null,
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'th',
-                                { scope: 'col' },
-                                'Firstname'
+                                "th",
+                                { scope: "col" },
+                                "Firstname"
                             ),
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'th',
-                                { scope: 'col' },
-                                'Lastname'
+                                "th",
+                                { scope: "col" },
+                                "Lastname"
                             ),
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'th',
-                                { scope: 'col' },
-                                'Company'
+                                "th",
+                                { scope: "col" },
+                                "Company"
                             ),
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'th',
-                                { scope: 'col' },
-                                'Email'
+                                "th",
+                                { scope: "col" },
+                                "Email"
                             ),
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'th',
-                                { scope: 'col' },
-                                'Phone'
+                                "th",
+                                { scope: "col" },
+                                "Phone"
                             ),
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'th',
-                                { scope: 'col' },
-                                'Created at'
+                                "th",
+                                { scope: "col" },
+                                "Created at"
                             ),
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'th',
-                                { scope: 'col' },
-                                'Edit'
+                                "th",
+                                { scope: "col" },
+                                "Edit"
                             ),
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'th',
-                                { scope: 'col' },
-                                'Remove'
+                                "th",
+                                { scope: "col" },
+                                "Remove"
                             )
                         )
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'tbody',
+                        "tbody",
                         null,
                         this.renderItems()
                     )
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'd-flex justify-content-center' },
+                    "div",
+                    { className: "d-flex justify-content-center" },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3_react_js_pagination___default.a, {
                         activePage: this.state.activePage,
                         itemsCountPerPage: this.state.itemsCountPerPage,
                         totalItemsCount: this.state.totalItemsCount,
                         pageRangeDisplayed: this.state.pageRangeDisplayed,
                         onChange: this.handlePageChange,
-                        itemClass: 'page-item',
-                        linkClass: 'page-link'
+                        itemClass: "page-item",
+                        linkClass: "page-link"
                     })
                 )
             );
@@ -63090,13 +63085,13 @@ var EmployerAdd = function (_Component) {
         var _this = _possibleConstructorReturn(this, (EmployerAdd.__proto__ || Object.getPrototypeOf(EmployerAdd)).call(this));
 
         _this.state = {
-            firstname: '',
-            lastname: '',
-            company: '',
-            email: '',
-            phone: '',
-            message: '',
-            messageType: ''
+            firstname: "",
+            lastname: "",
+            company: "",
+            email: "",
+            phone: "",
+            message: "",
+            messageType: ""
         };
 
         _this.handleOnChange = _this.handleOnChange.bind(_this);
@@ -63105,15 +63100,14 @@ var EmployerAdd = function (_Component) {
     }
 
     _createClass(EmployerAdd, [{
-        key: 'handleOnChange',
+        key: "handleOnChange",
         value: function handleOnChange(e) {
             this.setState(_defineProperty({}, e.target.name, e.target.value));
         }
     }, {
-        key: 'handleOnSubmit',
+        key: "handleOnSubmit",
         value: function handleOnSubmit(e) {
             e.preventDefault();
-            var employer_information = this.state;
             var _state = this.state,
                 firstname = _state.firstname,
                 lastname = _state.lastname,
@@ -63121,10 +63115,10 @@ var EmployerAdd = function (_Component) {
                 email = _state.email,
                 phone = _state.phone;
 
-            if (firstname == '' || lastname == '' || company == '' || email == '' || phone == '') {
+            if (firstname == "" || lastname == "" || company == "" || email == "" || phone == "") {
                 this.setState({
-                    message: 'You have empty fields',
-                    messageType: 'alert alert-danger'
+                    message: "You have empty fields",
+                    messageType: "alert alert-danger"
                 });
             } else {
                 var EmployerInfo = {
@@ -63136,93 +63130,99 @@ var EmployerAdd = function (_Component) {
                 };
                 this.props.handleEmployerAdd(EmployerInfo);
                 this.setState({
-                    message: 'Employer is created',
-                    messageType: 'alert alert-success'
+                    message: "Employer is created",
+                    messageType: "alert alert-success"
                 });
             }
         }
     }, {
-        key: 'render',
+        key: "render",
         value: function render() {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'div',
+                "div",
                 null,
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'form',
-                    { className: 'add_company', onSubmit: this.handleOnSubmit },
+                    "form",
+                    { className: "add_company",
+                        onSubmit: this.handleOnSubmit },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: this.state.messageType, role: 'alert' },
+                        "div",
+                        { className: this.state.messageType, role: "alert" },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'h3',
+                            "h3",
                             null,
                             this.state.message
                         )
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'form-group' },
+                        "div",
+                        { className: "form-group" },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'label',
-                            { htmlFor: 'firstname' },
-                            'Firstname'
+                            "label",
+                            { htmlFor: "firstname" },
+                            "Firstname"
                         ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', name: 'firstname', className: 'form-control', id: 'firstname', placeholder: 'Enter firstname', onChange: this.handleOnChange, value: this.state.firstname })
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { type: "text", name: "firstname", className: "form-control", id: "firstname", placeholder: "Enter firstname",
+                            onChange: this.handleOnChange, value: this.state.firstname })
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'form-group' },
+                        "div",
+                        { className: "form-group" },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'label',
-                            { htmlFor: 'lastname' },
-                            'Lastname'
+                            "label",
+                            { htmlFor: "lastname" },
+                            "Lastname"
                         ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', name: 'lastname', className: 'form-control', id: 'lastname', placeholder: 'Enter lastname', onChange: this.handleOnChange, value: this.state.lastname })
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { type: "text", name: "lastname", className: "form-control", id: "lastname", placeholder: "Enter lastname",
+                            onChange: this.handleOnChange, value: this.state.lastname })
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'form-group' },
+                        "div",
+                        { className: "form-group" },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'label',
-                            { htmlFor: 'company' },
-                            'Company'
+                            "label",
+                            { htmlFor: "company" },
+                            "Company"
                         ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', name: 'company', className: 'form-control', id: 'company', placeholder: 'Enter company', onChange: this.handleOnChange, value: this.state.company }),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { type: "text", name: "company", className: "form-control", id: "company", placeholder: "Enter company",
+                            onChange: this.handleOnChange, value: this.state.company }),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'small',
-                            { id: 'emailHelp', className: 'form-text text-muted' },
-                            'We\'ll never share your email with anyone else.'
+                            "small",
+                            { id: "emailHelp", className: "form-text text-muted" },
+                            "We\"ll never share your email with anyone else."
                         )
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'form-group' },
+                        "div",
+                        { className: "form-group" },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'label',
-                            { htmlFor: 'exampleInputEmail1' },
-                            'Email address'
+                            "label",
+                            { htmlFor: "exampleInputEmail1" },
+                            "Email address"
                         ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'email', name: 'email', className: 'form-control', id: 'email', placeholder: 'Enter email', onChange: this.handleOnChange, value: this.state.email }),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { type: "email", name: "email", className: "form-control", id: "email", placeholder: "Enter email",
+                            onChange: this.handleOnChange, value: this.state.email }),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'small',
-                            { id: 'emailHelp', className: 'form-text text-muted' },
-                            'We\'ll never share your email with anyone else.'
+                            "small",
+                            { id: "emailHelp", className: "form-text text-muted" },
+                            "We\"ll never share your email with anyone else."
                         )
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'form-group' },
+                        "div",
+                        { className: "form-group" },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'label',
-                            { htmlFor: 'phone' },
-                            'Phone'
+                            "label",
+                            { htmlFor: "phone" },
+                            "Phone"
                         ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', name: 'phone', className: 'form-control', id: 'phone', placeholder: 'Enter phone', onChange: this.handleOnChange, value: this.state.phone })
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { type: "text", name: "phone", className: "form-control", id: "phone", placeholder: "Enter phone",
+                            onChange: this.handleOnChange, value: this.state.phone })
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'button',
-                        { type: 'submit', name: 'submit', className: 'btn btn-primary' },
-                        'Submit'
+                        "button",
+                        { type: "submit", name: "submit", className: "btn btn-primary" },
+                        "Submit"
                     )
                 )
             );
@@ -63265,13 +63265,13 @@ var EmployerEdit = function (_Component) {
         var _this = _possibleConstructorReturn(this, (EmployerEdit.__proto__ || Object.getPrototypeOf(EmployerEdit)).call(this, props));
 
         _this.state = {
-            firstname: '',
-            lastname: '',
-            company: '',
-            email: '',
-            phone: '',
-            message: '',
-            messageType: ''
+            firstname: "",
+            lastname: "",
+            company: "",
+            email: "",
+            phone: "",
+            message: "",
+            messageType: ""
         };
 
         _this.handleOnChange = _this.handleOnChange.bind(_this);
@@ -63280,12 +63280,14 @@ var EmployerEdit = function (_Component) {
     }
 
     _createClass(EmployerEdit, [{
-        key: 'componentWillMount',
+        key: "componentWillMount",
         value: function componentWillMount() {
             var _this2 = this;
 
-            __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get('/api/employees/' + this.props.match.params.id, {
-                headers: { 'Authorization': 'Bearer ' + this.props.token }
+            __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get("/api/employees/" + this.props.match.params.id, {
+                headers: {
+                    "Authorization": "Bearer " + this.props.token
+                }
             }).then(function (response) {
                 _this2.setState({
                     firstname: response.data.firstname,
@@ -63299,12 +63301,12 @@ var EmployerEdit = function (_Component) {
             });
         }
     }, {
-        key: 'handleOnChange',
+        key: "handleOnChange",
         value: function handleOnChange(e) {
             this.setState(_defineProperty({}, e.target.name, e.target.value));
         }
     }, {
-        key: 'handleOnSubmit',
+        key: "handleOnSubmit",
         value: function handleOnSubmit(e) {
             e.preventDefault();
             var employer_information = this.state;
@@ -63315,102 +63317,107 @@ var EmployerEdit = function (_Component) {
                 email = _state.email,
                 phone = _state.phone;
 
-            if (firstname == '' || lastname == '' || company == '' || email == '' || phone == '') {
+            if (firstname == "" || lastname == "" || company == "" || email == "" || phone == "") {
                 this.setState({
-                    message: 'You have fields',
-                    messageType: 'alert alert-danger'
+                    message: "You have fields",
+                    messageType: "alert alert-danger"
                 });
             } else {
                 var id = this.props.match.params.id;
                 this.props.handleEmployerUpdate(id, employer_information);
                 this.setState({
-                    message: 'Employer is updated',
-                    messageType: 'alert alert-success'
+                    message: "Employer is updated",
+                    messageType: "alert alert-success"
                 });
             }
         }
     }, {
-        key: 'render',
+        key: "render",
         value: function render() {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'div',
+                "div",
                 null,
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'form',
-                    { className: 'add_company', onSubmit: this.handleOnSubmit },
+                    "form",
+                    { className: "add_company", onSubmit: this.handleOnSubmit },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: this.state.messageType, role: 'alert' },
+                        "div",
+                        { className: this.state.messageType, role: "alert" },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'h3',
+                            "h3",
                             null,
                             this.state.message
                         )
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'form-group' },
+                        "div",
+                        { className: "form-group" },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'label',
-                            { htmlFor: 'firstname' },
-                            'Firstname'
+                            "label",
+                            { htmlFor: "firstname" },
+                            "Firstname"
                         ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', name: 'firstname', className: 'form-control', id: 'firstname', placeholder: 'Enter firstname', onChange: this.handleOnChange, value: this.state.firstname })
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { type: "text", name: "firstname", className: "form-control", id: "firstname", placeholder: "Enter firstname",
+                            onChange: this.handleOnChange, value: this.state.firstname })
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'form-group' },
+                        "div",
+                        { className: "form-group" },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'label',
-                            { htmlFor: 'lastname' },
-                            'Lastname'
+                            "label",
+                            { htmlFor: "lastname" },
+                            "Lastname"
                         ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', name: 'lastname', className: 'form-control', id: 'lastname', placeholder: 'Enter lastname', onChange: this.handleOnChange, value: this.state.lastname })
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { type: "text", name: "lastname", className: "form-control", id: "lastname", placeholder: "Enter lastname",
+                            onChange: this.handleOnChange, value: this.state.lastname })
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'form-group' },
+                        "div",
+                        { className: "form-group" },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'label',
-                            { htmlFor: 'company' },
-                            'Company'
+                            "label",
+                            { htmlFor: "company" },
+                            "Company"
                         ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', name: 'company', className: 'form-control', id: 'company', placeholder: 'Enter company', onChange: this.handleOnChange, value: this.state.company }),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { type: "text", name: "company", className: "form-control", id: "company", placeholder: "Enter company",
+                            onChange: this.handleOnChange, value: this.state.company }),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'small',
-                            { id: 'emailHelp', className: 'form-text text-muted' },
-                            'We\'ll never share your email with anyone else.'
+                            "small",
+                            { id: "emailHelp", className: "form-text text-muted" },
+                            "We\"ll never share your email with anyone else."
                         )
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'form-group' },
+                        "div",
+                        { className: "form-group" },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'label',
-                            { htmlFor: 'exampleInputEmail1' },
-                            'Email address'
+                            "label",
+                            { htmlFor: "exampleInputEmail1" },
+                            "Email address"
                         ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'email', name: 'email', className: 'form-control', id: 'email', placeholder: 'Enter email', onChange: this.handleOnChange, value: this.state.email }),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { type: "email", name: "email", className: "form-control", id: "email", placeholder: "Enter email",
+                            onChange: this.handleOnChange, value: this.state.email }),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'small',
-                            { id: 'emailHelp', className: 'form-text text-muted' },
-                            'We\'ll never share your email with anyone else.'
+                            "small",
+                            { id: "emailHelp", className: "form-text text-muted" },
+                            "We\"ll never share your email with anyone else."
                         )
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'form-group' },
+                        "div",
+                        { className: "form-group" },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'label',
-                            { htmlFor: 'phone' },
-                            'Phone'
+                            "label",
+                            { htmlFor: "phone" },
+                            "Phone"
                         ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', name: 'phone', className: 'form-control', id: 'phone', placeholder: 'Enter phone', onChange: this.handleOnChange, value: this.state.phone })
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { type: "text", name: "phone", className: "form-control", id: "phone", placeholder: "Enter phone",
+                            onChange: this.handleOnChange, value: this.state.phone })
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'button',
-                        { type: 'submit', name: 'submit', className: 'btn btn-primary' },
-                        'Submit'
+                        "button",
+                        { type: "submit", name: "submit", className: "btn btn-primary" },
+                        "Submit"
                     )
                 )
             );

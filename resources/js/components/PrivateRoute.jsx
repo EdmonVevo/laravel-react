@@ -8,7 +8,9 @@ import {
 const PrivateRoute = ({component:Component,loginStatus,token,...rest}) => (
     <Route {...rest} render = {(props)=>(
         loginStatus === true
-            ? <Component loginStatus={loginStatus} token={token}/>
+            ? <Component
+                loginStatus={loginStatus}
+                token={token}/>
             : <Redirect to="/login"/>
     )}
     />

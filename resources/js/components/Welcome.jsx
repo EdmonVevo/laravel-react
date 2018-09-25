@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-export default class Welcome extends Component{
-    render(){
-        return (
-            <div className="homepage">
-                <h1>Welcome! Login to continue</h1><br/>
-            </div>
-        )
-    }
-};
+
+const Welcome = () => {
+    return (
+        <div className="homepage">
+            <h1>Welcome! Login to continue</h1><br/>
+        </div>
+    )
+}
+export default Welcome;
